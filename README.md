@@ -20,9 +20,6 @@ How to run the GYM  Management System Project Using PHP and MySQL  Project
 
 
 
-- for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com
-- Visit My Website : https://dev-mhrony.com
-
 ### Database Name
 - `ccbd_medipos`
 
@@ -31,4 +28,9 @@ How to run the GYM  Management System Project Using PHP and MySQL  Project
 
 
  - Admin Deshbord
-    <img src="screen/01.png">
+    
+
+    <img src = "screenshots/1.png">
+    <img src = "screenshots/2.png">
+    <img src = "screenshots/3.png">
+    <img src = "screenshots/4.png">
