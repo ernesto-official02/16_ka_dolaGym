@@ -1,35 +1,37 @@
-
 <?php
 session_start();
 error_reporting(0);
 require_once('include/config.php');
 $msg = ""; 
-if(isset($_POST['submit'])) {
-  $email = trim($_POST['email']);
-  $password = md5(($_POST['password']));
-  if($email != "" && $password != "") {
-    try {
-      $query = "select id, fname, lname, email, mobile, password, address, create_date from tbluser where email=:email and password=:password";
-      $stmt = $dbh->prepare($query);
-      $stmt->bindParam('email', $email, PDO::PARAM_STR);
-      $stmt->bindValue('password', $password, PDO::PARAM_STR);
-      $stmt->execute();
-      $count = $stmt->rowCount();
-      $row   = $stmt->fetch(PDO::FETCH_ASSOC);
-      if($count == 1 && !empty($row)) {
-        $_SESSION['uid']   = $row['id'];
-        $_SESSION['email'] = $row['email'];
-        $_SESSION['name'] = $row['fname'];
-       header("location: index.php");
-      } else {
-        $msg = "Invalid username and password!";
-      }
-    } catch (PDOException $e) {
-      echo "Error : ".$e->getMessage();
+
+if (isset($_POST['submit'])) {
+    $email = trim($_POST['email']);
+    $password = md5($_POST['password']);
+    
+    if ($email != "" && $password != "") {
+        try {
+            $query = "SELECT id, fname, lname, email FROM tbluser WHERE email=:email AND password=:password";
+            $stmt = $dbh->prepare($query);
+            $stmt->bindParam('email', $email, PDO::PARAM_STR);
+            $stmt->bindValue('password', $password, PDO::PARAM_STR);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($stmt->rowCount() == 1 && !empty($row)) {
+                $_SESSION['uid'] = $row['id'];
+                $_SESSION['email'] = $row['email'];
+                $_SESSION['name'] = $row['fname'];
+                $_SESSION['success_msg'] = "Welcome back, " . $row['fname'] . "!";
+                header("location: index.php");
+            } else {
+                $msg = "Invalid username and password!";
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    } else {
+        $msg = "Both fields are required!";
     }
-  } else {
-    $msg = "Both fields are required!";
-  }
 }
 ?>	
 <!DOCTYPE html>
@@ -124,7 +126,33 @@ if(isset($_POST['submit'])) {
 		</div>
 	</section>
 
+	<?php
+session_start();
+?>
 
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <title>Gym Management System</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+</head>
+<body>
+    <!-- Header Section -->
+    <?php include 'include/header.php'; ?>
+
+    <?php if (isset($_SESSION['success_msg'])): ?>
+    <script>
+        alert("<?php echo $_SESSION['success_msg']; ?>");
+    </script>
+    <?php 
+        unset($_SESSION['success_msg']); // Clear the message after displaying
+    ?>
+    <?php endif; ?>
+
+    <!-- Rest of your index.php content -->
+</body>
+</html>
 	<?php include 'include/footer.php'; ?>
 	<!-- Footer Section end -->
 

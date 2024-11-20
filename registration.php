@@ -2,88 +2,75 @@
 error_reporting(0);
 require_once('include/config.php');
 
-if(isset($_POST['submit']))
-{ 
-$fname=$_POST['fname'];
-$lname=$_POST['lname'];
-$mobile=$_POST['mobile'];
-$email=$_POST['email'];
-$state=$_POST['state'];
-$city=$_POST['city'];
-$Password=$_POST['password'];
-$pass=md5($Password);
-$RepeatPassword = $_POST['RepeatPassword'];
+if (isset($_POST['submit'])) { 
+    $fname = htmlspecialchars($_POST['fname']);
+    $lname = htmlspecialchars($_POST['lname']);
+    $mobile = htmlspecialchars($_POST['mobile']);
+    $email = htmlspecialchars($_POST['email']);
+    $state = htmlspecialchars($_POST['state']);
+    $city = htmlspecialchars($_POST['city']);
+    $Password = $_POST['password'];
+    $pass = md5($Password);
+    $RepeatPassword = $_POST['RepeatPassword'];
 
-// Email id Already Exit
+    // Check if Email or Mobile already exists
+    $usermatch = $dbh->prepare("SELECT mobile, email FROM tbluser WHERE email=:usreml OR mobile=:mblenmbr");
+    $usermatch->execute(array(':usreml' => $email, ':mblenmbr' => $mobile)); 
+    $row = $usermatch->fetch(PDO::FETCH_ASSOC);
+    $usrdbeml = $row['email'] ?? null;
+    $usrdbmble = $row['mobile'] ?? null;
 
-$usermatch=$dbh->prepare("SELECT mobile,email FROM tbluser WHERE (email=:usreml || mobile=:mblenmbr)");
-$usermatch->execute(array(':usreml'=>$email,':mblenmbr'=>$mobile)); 
-while($row=$usermatch->fetch(PDO::FETCH_ASSOC))
-{
-$usrdbeml= $row['email'];
-$usrdbmble=$row['mobile'];
+    if (empty($fname)) {
+        $error = "Please Enter First Name";
+    } else if (empty($mobile)) {
+        $error = "Please Enter Mobile No";
+    } else if (empty($email)) {
+        $error = "Please Enter Email";
+    } else if ($email == $usrdbeml || $mobile == $usrdbmble) {
+        $error = "Email Id or Mobile Number Already Exists!";
+    } else if (empty($Password) || empty($RepeatPassword)) {
+        $error = "Password and Confirm Password Cannot Be Empty!";
+    } else if ($Password !== $RepeatPassword) {
+        $error = "Password and Confirm Password Do Not Match!";
+    } else {
+        // Insert user details into the database
+        $sql = "INSERT INTO tbluser (fname, lname, email, mobile, state, city, password) VALUES (:fname, :lname, :email, :mobile, :state, :city, :Password)";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':fname', $fname, PDO::PARAM_STR);
+        $query->bindParam(':lname', $lname, PDO::PARAM_STR);
+        $query->bindParam(':email', $email, PDO::PARAM_STR);
+        $query->bindParam(':mobile', $mobile, PDO::PARAM_STR);
+        $query->bindParam(':state', $state, PDO::PARAM_STR);
+        $query->bindParam(':city', $city, PDO::PARAM_STR);
+        $query->bindParam(':Password', $pass, PDO::PARAM_STR);
+
+        if ($query->execute()) {
+            $lastInsertId = $dbh->lastInsertId();
+            if ($lastInsertId > 0) {
+                echo "<script>alert('Registration successful. Please login');</script>";
+                echo "<script>window.location.href='login.php';</script>";
+
+                // Email Sending Logic
+                $to = "ernestanmol@gmail.com";
+                $subject = "New User Registration Notification";
+                $message = "Hello Admin,\n\nA new user has registered on 16_dholagym.\n\nDetails:\nUsername: $fname $lname\nEmail: $email\nMobile: $mobile\n\nBest Regards,\n16_dholagym Team";
+
+                $headers = "From: noreply@16_dholagym.com\r\n" .
+                           "Reply-To: noreply@16_dholagym.com\r\n" .
+                           "X-Mailer: PHP/" . phpversion();
+
+                if (!mail($to, $subject, $message, $headers)) {
+                    error_log("Failed to send email notification to admin.");
+                }
+            } else {
+                $error = "Registration Not Successful!";
+            }
+        } else {
+            $error = "Database Error: Could Not Insert Data!";
+        }
+    }
 }
-
-
-if(empty($fname))
-{
-  $nameerror="Please Enter First Name";
-}
-
- else if(empty($mobile))
- {
- $mobileerror="Please Enter Mobile No";
- }
-
- else if(empty($email))
- {
- $emailerror="Please Enter Email";
- }
-
-else if($email==$usrdbeml || $mobile==$usrdbmble)
- {
-  $error="Email Id or Mobile Number Already Exists!";
- }
-  else if($Password=="" || $RepeatPassword=="")
- {
-    
-   $error="Password And Confirm Password Not Empty!";
- 
- }
- else if($_POST['password'] != $_POST['RepeatPassword'])
- {
-  
-   $error="Password And Confirm Password Not Matched";
- }
-
- 
-else{
-$sql="INSERT INTO tbluser (fname,lname,email,mobile,state,city,password) Values(:fname,:lname,:email,:mobile,:state,:city,:Password)";
-
-$query = $dbh -> prepare($sql);
-$query->bindParam(':fname',$fname,PDO::PARAM_STR);
-$query->bindParam(':lname',$lname,PDO::PARAM_STR);
-$query->bindParam(':email',$email,PDO::PARAM_STR);
-$query->bindParam(':mobile',$mobile,PDO::PARAM_STR);
-$query->bindParam(':state',$state,PDO::PARAM_STR);
-$query->bindParam(':city',$city,PDO::PARAM_STR);
-$query->bindParam(':Password',$pass,PDO::PARAM_STR);
-
-$query -> execute();
-$lastInsertId = $dbh->lastInsertId();
-if($lastInsertId>0)
-{
-echo "<script>alert('Registration successfull. Please login');</script>";
-echo "<script> window.location.href='login.php';</script>";
-}
-else 
-{
-$error ="Registration Not successfully";
- }
-}
- }
- 
- ?>
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -208,3 +195,4 @@ $error ="Registration Not successfully";
     box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 }
         </style>	
+		
