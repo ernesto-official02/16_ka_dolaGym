@@ -192,6 +192,67 @@ if (isset($_POST['submit'])) {
         max-width: 45%;
     }
 }
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding-top: 60px;
+}
+
+.modal-content {
+    margin: 5% auto;
+    padding: 20px;
+    background:  #f1e7fd;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.close {
+    color: black;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    /* Button styles */
+    .read-more-btn {
+        background-color: #6aacf1; 
+        color: white; 
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .read-more-btn:hover {
+        background-color: #0056b3; 
+        transform: scale(1.05);
+    }
+
+    /* Focus effect */
+    .read-more-btn:focus {
+        outline: none; 
+        box-shadow: 0 0 5px #007BFF;
+    }
+
 
 </style>
 <body>
@@ -202,6 +263,8 @@ if (isset($_POST['submit'])) {
             <ul>
                 <li><a href="#">Home</a></li>
                 <li><a href="#about">About Us</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="meals.html">Meals</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#contact">Contact Us</a></li>
             </ul>
@@ -266,8 +329,8 @@ if (isset($_POST['submit'])) {
     </section>
 
     <!-- Videos Section -->
-   <!-- Videos Section -->
-   <section class="video-section" id="videos">
+     <!-- Videos Section -->
+    <section class="video-section" id="videos">
         <h2>Workout Videos</h2>
         <div class="video-grid">
             <div class="video-item">
@@ -276,6 +339,8 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Biceps Exercise 1</p>
+                <button class="read-more-btn" data-modal="modal1">Read More</button>
+                
             </div>
 
             <div class="video-item">
@@ -284,6 +349,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Biceps Exercise 2</p>
+                <button class="read-more-btn" data-modal="modal2">Read More</button>
             </div>
 
             <div class="video-item">
@@ -292,6 +358,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Biceps Exercise 3</p>
+                <button class="read-more-btn" data-modal="modal3">Read More</button>
             </div>
 
             <div class="video-item">
@@ -300,6 +367,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Triceps Exercise 1</p>
+                <button class="read-more-btn" data-modal="modal4">Read More</button>
             </div>
 
             <div class="video-item">
@@ -308,6 +376,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Triceps Exercise 2</p>
+                <button class="read-more-btn" data-modal="modal5">Read More</button>
             </div>
 
             <div class="video-item">
@@ -316,6 +385,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Triceps Exercise 3</p>
+                <button class="read-more-btn" data-modal="modal6">Read More</button>
             </div>
 
             <div class="video-item">
@@ -324,6 +394,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Shoulder Exercise 1</p>
+                <button class="read-more-btn" data-modal="modal7">Read More</button>
             </div>
 
             <div class="video-item">
@@ -332,6 +403,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Shoulder Exercise 2</p>
+                <button class="read-more-btn" data-modal="modal8">Read More</button>
             </div>
 
             <div class="video-item">
@@ -340,6 +412,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Shoulder Exercise 3</p>
+                <button class="read-more-btn" data-modal="modal9">Read More</button>
             </div>
 
             <div class="video-item">
@@ -348,6 +421,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Chest Exercise 1</p>
+                <button class="read-more-btn" data-modal="modal10">Read More</button>
             </div>
 
             <div class="video-item">
@@ -356,6 +430,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Chest Exercise 2</p>
+                <button class="read-more-btn" data-modal="modal11">Read More</button>
             </div>
 
             <div class="video-item">
@@ -364,6 +439,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Chest Exercise 3</p>
+                <button class="read-more-btn" data-modal="modal12">Read More</button>
             </div>
 
             <div class="video-item">
@@ -372,6 +448,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Back Exercise 1</p>
+                <button class="read-more-btn" data-modal="modal13">Read More</button>
             </div>
 
             <div class="video-item">
@@ -380,6 +457,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Back Exercise 2</p>
+                <button class="read-more-btn" data-modal="modal14">Read More</button>
             </div>
 
             <div class="video-item">
@@ -388,6 +466,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Back Exercise 3</p>
+                <button class="read-more-btn" data-modal="modal15">Read More</button>
             </div>
 
             <div class="video-item">
@@ -396,6 +475,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Leg Exercise 1</p>
+                <button class="read-more-btn" data-modal="modal16">Read More</button>
             </div>
 
             <div class="video-item">
@@ -404,6 +484,7 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Leg Exercise 2</p>
+                <button class="read-more-btn" data-modal="modal17">Read More</button>
             </div>
 
             <div class="video-item">
@@ -412,10 +493,158 @@ if (isset($_POST['submit'])) {
                     Your browser does not support the video tag.
                 </video>
                 <p>Leg Exercise 3</p>
+                <button class="read-more-btn" data-modal="modal18">Read More</button>
             </div>
 
         </div>
     </section>
+
+      <!-- Modal Structure -->
+      <div id="modal1" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal1">&times;</span>
+            <h2>Biceps Exercise 1</h2>
+            <p>This  Hammer Curl exercise focuses on your biceps using dumbbell weights to build strength and improve muscle tone. Recommended sets: 3 sets of 10-12 reps and maintain up-down flow</p>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal2">&times;</span>
+            <h2>Biceps Exercise 2</h2>
+            <p>This  Barbell Curl exercise focuses on your biceps using Barbell weights to build strength . Recommended sets: 3 sets of 10-15 reps and maintain up-down flow with slow movement</p>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal3">&times;</span>
+            <h2>Biceps Exercise 3</h2>
+            <p>This Curl exercise focuses on your biceps using dumbbell weights to build strength.Train Your Biceps one by one in siting position Recommended sets: 3 sets of 10-15 reps and maintain up-down flow with slow movement</p>
+        </div>
+    </div>
+
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal4">&times;</span>
+            <h2>Triceps Exercise 1</h2>
+            <p>This Triceps exercise focuses on your triceps using machine weights to build Shape and strength. Recommended sets: 3 sets of 10-15 reps and maintain pull-down flow with slow movement and set your hand position below chest</p>
+        </div>
+    </div>
+
+    <div id="modal5" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal5">&times;</span>
+            <h2>Triceps Exercise 2</h2>
+            <p>This Triceps home exercise focuses on your triceps using body weights to build Shape and strength. Recommended sets: 3 sets of 10-15 reps and maintain the hand in same position and move your body in up-down flow with slow movement</p>
+        </div>
+    </div>
+
+    <div id="modal6" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal6">&times;</span>
+            <h2>Triceps Exercise 3</h2>
+            <p>This Dumbbell standing triceps extension focuses on your triceps using dumbbell weights to build Shape and strength. Recommended sets: 3 sets of 10-15 reps and maintain the half hand in same position near your ear and move your arms in up-down flow with slow movement</p>
+        </div>
+    </div>
+
+    <div id="modal7" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal7">&times;</span>
+            <h2>Shoulder Exercise 1</h2>
+            <p>This Standing Shoulder Fly exercise focuses on your Shoulder using dumbbell weights to build Shape and strength. Recommended sets: 3 sets of 10-15 reps and move your arms like bird fly in up-down flow with slow movement</p>
+        </div>
+    </div>
+
+    <div id="modal8" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal8">&times;</span>
+            <h2>Shoulder Exercise 2</h2>
+            <p>This  Seated Dumbbell Side Lateral Raise exercise focuses on your Shoulder using dumbbell weights to build Shape and strength. Recommended sets: 3 sets of 10-15 reps and move your arms like bird fly in up-down flow with slow movement in sitting position</p>
+        </div>
+    </div>
+
+    <div id="modal9" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal9">&times;</span>
+            <h2>Shoulder Exercise 3</h2>
+            <p>This Seated Dumbbell Press exercise focuses on your Shoulder using dumbbell weights to build Shape and strength. Recommended sets: 3 sets of 10-15 reps and move your arm up-down flow with slow movement in sitting position</p>
+        </div>
+    </div>
+
+    <div id="modal10" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal10">&times;</span>
+            <h2>Chest Exercise 1</h2>
+            <p>This Standing Cable Fly excercise focuses on your Chest using machine weights to build Shape and strength. Recommended sets: 3 sets of 10-15 reps and move your arm open-close flow with slow movement in standing position</p>
+        </div>
+    </div>
+
+    <div id="modal11" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal11">&times;</span>
+            <h2>Chest Exercise 2</h2>
+            <p>This bench press excercise focuses on your Chest using barbbel weights to build Shape and strength. Recommended sets: 3 sets of 10-15 reps and move your hand up-down flow with slow movement </p>
+        </div>
+    </div>
+
+    <div id="modal12" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal12">&times;</span>
+            <h2>Chest Exercise 3</h2>
+            <p>This Chest Fly excercise focuses on your Chest using machine weights to build Shape and strength. Recommended sets: 3 sets of 10-15 reps and move your hand open-close flow with slow movement </p>
+        </div>
+    </div>
+
+    <div id="modal13" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal13">&times;</span>
+            <h2>Back Exercise 1</h2>
+            <p>This Lat Pull-Down excercise focuses on your Back Lat using machine weights to build Shape and strength. Recommended sets: 3 sets of 10-15 reps and hold machine barbell, move your hand up-down flow with slow movement </p>
+        </div>
+    </div>
+
+    <div id="modal14" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal14">&times;</span>
+            <h2>Back Exercise 2</h2>
+            <p>This Back excercise focuses on your back using machine weights to build Shape and strength. Recommended sets: 3 sets of 10-15 reps and hold machine curv barbell, move your hand backward-forward flow with slow movement </p>
+        </div>
+    </div>
+
+    <div id="modal15" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal15">&times;</span>
+            <h2>Back Exercise 3</h2>
+            <p>This Back excercise focuses on your back core using machine weights to build strength. Recommended sets: 3 sets of 10-15 reps and hold barbell, take your leg and hand support to avoid injury with slow movement </p>
+        </div>
+    </div>
+
+    <div id="modal16" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal16">&times;</span>
+            <h2>Leg Exercise 1</h2>
+            <p>This Leg lanches excercise focuses on your leg using dumbbell weights to build strength. Recommended sets: 3 sets of 10-15 reps with slow movement </p>
+        </div>
+    </div>
+
+    <div id="modal17" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal17">&times;</span>
+            <h2>Leg Exercise 2</h2>
+            <p>This Leg press  excercise focuses on your leg using machine weights to build strength. Recommended sets: 3 sets of 10-15 reps and press the machine platform with slow movement </p>
+        </div>
+    </div>
+
+    <div id="modal18" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="modal18">&times;</span>
+            <h2>Leg Exercise 3</h2>
+            <p>This Leg scott excercise focuses on your leg using machine barbell weights to build strength. Recommended sets: 3 sets of 10-15 reps, maintain sit-stand flow with slow movement </p>
+        </div>
+    </div>
+
+
 
         <!-- About Us Section -->
 <section id="about" class="about-section">
@@ -471,6 +700,28 @@ if (isset($_POST['submit'])) {
     <footer id="about">
         <p>&copy; 2024 16KA-DOLA GYM. All rights reserved.</p>
     </footer>
+  
+    <script>
+        // JavaScript to handle modal functionality
+        document.querySelectorAll('.read-more-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const modalId = button.getAttribute('data-modal');
+                document.getElementById(modalId).style.display = 'block';
+            });
+        });
 
+        document.querySelectorAll('.close').forEach(span => {
+            span.addEventListener('click', () => {
+                const modalId = span.getAttribute('data-modal');
+                document.getElementById(modalId).style.display = 'none';
+            });
+        });
+
+        window.addEventListener('click', event => {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

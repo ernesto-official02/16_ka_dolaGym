@@ -42,6 +42,25 @@ echo "<script>window.location.href='booking-history.php'</script>";
 	<link rel="stylesheet" href="css/style.css"/>
 
 </head>
+<style>
+.row1 {
+    display: flex;
+    justify-content: center; 
+    flex-wrap: wrap; 
+    gap: 20px; 
+}
+
+
+.col-lg-3 {
+    flex: 0 0 calc(50% - 20px); 
+    max-width: calc(50% - 20px); 
+}
+.row1 {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+</style>
 <body>
 	<!-- Page Preloder -->
 	
@@ -75,7 +94,7 @@ echo "<script>window.location.href='booking-history.php'</script>";
 				<h2>Pricing plans</h2>
 				<p>Practice Yoga to perfect physical beauty, take care of your soul and enjoy life more fully!</p>
 			</div>
-			<div class="row">
+			<center><div class="row1">
 				        <?php 
 
 						$sql ="SELECT id, category, titlename, PackageType, PackageDuratiobn, Price, uploadphoto, Description, create_date from tbladdpackage";
@@ -115,7 +134,7 @@ echo "<script>window.location.href='booking-history.php'</script>";
 					</div>
 				</div>
 				<?php  $cnt=$cnt+1; } } ?>
-			</div>
+			</div></center>
 		</div>
 	</section>
 
